@@ -7,7 +7,7 @@ class Bot(Client):
         self.silent_users = []
 
     async def handle_updates(self, update: Updates):
-        if update.object_guid == 'g0DQVcs06895f970201487d0ea1fdd97' and update.message.author_object_guid == 'u0EzVvG0d22c29de91f6699181af2d38':
+        if update.object_guid == 'your group guid' and update.message.author_object_guid == 'owner guid ':
             if not update.message.reply_to_message_id:
                 return
 
