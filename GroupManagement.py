@@ -2,12 +2,12 @@ from rubpy import Client, types, utils
 from rubpy.types import Updates
 
 class Bot(Client):
-    def init(self, name):
-        super().init(name)
+    def __init__(self, name):
+        super().__init__(name)
         self.silent_users = []
 
     async def handle_updates(self, update: Updates):
-        if update.object_guid == 'your group guid' and update.message.author_object_guid == 'owner guid ':
+        if update.object_guid == 'your gap guid' and update.message.author_object_guid == 'owner guid':
             if not update.message.reply_to_message_id:
                 return
 
@@ -31,8 +31,13 @@ class Bot(Client):
                 await update.reply(f'کاربر {utils.Mention("کاربر", user_guid)} از گروه حذف شد')
 
             elif update.message.text == 'لیست سکوت':
-                for x in self.silent_users:
-                    await update.reply(utils.Mention("کاربر", x))
+            	if self.silent_users:
+            		mentions = ', '.join([utils.Mention("کاربر", x)
+            		for x in self.silent_users])
+            		await update.reply(mentions)
+            	else:
+            		await update.reply('لیست سکوت خالی است.')
+
 
     async def check_silent_users(self, update: Updates):
         if update.message.author_object_guid in self.silent_users:
